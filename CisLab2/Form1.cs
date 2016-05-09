@@ -121,6 +121,21 @@ namespace CisLab2
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            //wyświetlanie txt
+            textBox1.Text = String.Empty;
+            DiskFile file = (DiskFile)treeView1.SelectedNode.Tag;
+
+            toolStripStatusLabel1.Text = file.getRahs();
+
+            if (file.FileInfo != null)
+            {
+                if (file.FileInfo.Extension.Equals(".txt"))
+                {
+                    //textboxm usi byc multiline i warto dodac vertical scrollbar
+                    textBox1.Text = File.ReadAllText(file.FileInfo.FullName);
+
+                }
+            }
 
         }
 
