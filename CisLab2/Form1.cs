@@ -73,6 +73,15 @@ namespace CisLab2
 
         }
 
+        public void refreshTreeView()
+        {
+            root = new DiskFile(folderBrowserDialog.SelectedPath);
+            treeView1.Nodes.Clear();
+            node = treeView1.Nodes.Add(root.Name);
+            node.Tag = root;
+            fileLoader(root, node);
+        }
+
         void fileLoader(DiskFile diskFile, TreeNode parentNode)
         {
             TreeNode childrenNode;
@@ -104,7 +113,7 @@ namespace CisLab2
                 }
                 else
                 {
-                    Form2 form = new Form2(file.Root., this);
+                    Form2 form = new Form2(Directory.GetParent(file.FileInfo.FullName).FullName, this);
                     form.Show();
                 }
             }
@@ -127,8 +136,7 @@ namespace CisLab2
             {
                 DiskFile file = (DiskFile)treeView1.SelectedNode.Tag;              
                 //file.DeleteFile();
-                treeView1.SelectedNode.Remove();    
-
+                treeView1.SelectedNode.Remove();
             }
         }
 

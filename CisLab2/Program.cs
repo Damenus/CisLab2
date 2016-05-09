@@ -16,7 +16,7 @@ namespace CisLab2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Lab2());
+            Application.Run(new Form1());
         }
     }
 }
