@@ -13,14 +13,14 @@ using System.Windows.Forms;
 
 namespace CisLab2
 {
-    public partial class Lab2 : Form
+    public partial class Form1 : Form
     {
 
         private FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
         private DiskFile root;
         private TreeNode node;
 
-        public Lab2()
+        public Form1()
         {
             InitializeComponent();
         }
@@ -60,7 +60,7 @@ namespace CisLab2
                 root = new DiskFile(folderBrowserDialog.SelectedPath);
                 treeView1.Nodes.Clear();
                 node = treeView1.Nodes.Add(root.Name);
-                node.Tag = root.Dir;
+                node.Tag = root;
                 fileLoader(root, node);
 
 
@@ -79,7 +79,7 @@ namespace CisLab2
             foreach (var f in diskFile.Children)
             {
                 childrenNode = parentNode.Nodes.Add(f.Name);
-                childrenNode.Tag = f.Dir;
+                childrenNode.Tag = f;
                 if(f.Type == DiskFile.Types.Directory)
                     fileLoader(f, childrenNode);
             }
@@ -93,10 +93,46 @@ namespace CisLab2
  
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            //tworzenie
+            if (treeView1.SelectedNode != null)
+            {
+                DiskFile file = (DiskFile)treeView1.SelectedNode.Tag;
+                if (file.Type == DiskFile.Types.Directory)
+                {
+                    Form2 form = new Form2(file.Dir.FullName, this);
+                    form.Show(); 
+                }
+                else
+                {
+                    Form2 form = new Form2(file.Root., this);
+                    form.Show();
+                }
+            }
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //usuwanie
+            if (treeView1.SelectedNode != null)
+            {
+                DiskFile file = (DiskFile)treeView1.SelectedNode.Tag;              
+                //file.DeleteFile();
+                treeView1.SelectedNode.Remove();    
+
+            }
+        }
+
+        private void contextMenuStrip2_Opening(object sender, CancelEventArgs e)
         {
 
         }
@@ -116,6 +152,7 @@ namespace CisLab2
         private long size;
         private DirectoryInfo dir;
         private FileSystemInfo root;
+        private FileInfo fileInfo;
         private List<DiskFile> children;
         private string name;
         private string location;
@@ -124,6 +161,16 @@ namespace CisLab2
         public DirectoryInfo Dir
         {
             get { return this.dir; }
+        }
+
+
+        public FileInfo FileInfo
+        {
+            get { return this.fileInfo;  }
+        }
+        public FileSystemInfo Root
+        {
+            get { return this.root;  }
         }
         public string Name
         {
@@ -172,9 +219,9 @@ namespace CisLab2
             else
             {
                 this.type = Types.File;
-
+                
                 var file = new FileInfo(location);
-
+                this.fileInfo = file;
                 this.root = file;
                 this.location = location;
                 this.name = file.Name;
@@ -182,6 +229,29 @@ namespace CisLab2
             }
 
 
+        }
+
+        public void DeleteFile()
+        {
+
+            if (Type == DiskFile.Types.File)
+            {
+                if (FileInfo.IsReadOnly)
+                {
+                    FileInfo.IsReadOnly = false;
+                }
+                FileInfo.Delete();
+            }
+            else
+            {
+                foreach (var d in children)
+                {
+                    
+                        d.DeleteFile();                        
+                   
+                }
+                dir.Delete();
+            }
         }
 
         public void WriteTree(int level = 1)
@@ -209,7 +279,6 @@ namespace CisLab2
                 }
 
         }
-
 
         public void AddToSortedColection()
         {

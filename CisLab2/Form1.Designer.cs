@@ -1,6 +1,6 @@
 ﻿namespace CisLab2
 {
-    partial class Lab2
+    partial class Form1
     {
         /// <summary>
         /// Required designer variable.
@@ -49,6 +49,7 @@
             this.deleteToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(107, 48);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // createToolStripMenuItem
             // 
@@ -62,6 +63,7 @@
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
             this.deleteToolStripMenuItem.Text = "delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // menuStrip2
             // 
@@ -86,19 +88,20 @@
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(103, 22);
             this.toolStripMenuItem3.Text = "Open";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(103, 22);
             this.toolStripMenuItem4.Text = "Exit";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
             // treeView1
             // 
+            this.treeView1.ContextMenuStrip = this.contextMenuStrip1;
             this.treeView1.Location = new System.Drawing.Point(19, 31);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(510, 217);
@@ -113,14 +116,14 @@
             this.textBox1.Size = new System.Drawing.Size(510, 196);
             this.textBox1.TabIndex = 3;
             // 
-            // Lab2
+            // Form1
             // 
             this.ClientSize = new System.Drawing.Size(565, 507);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.menuStrip2);
             this.MainMenuStrip = this.menuStrip2;
-            this.Name = "Lab2";
+            this.Name = "Form1";
             this.Text = "Lab2 - File Manager";
             this.contextMenuStrip1.ResumeLayout(false);
             this.menuStrip2.ResumeLayout(false);
